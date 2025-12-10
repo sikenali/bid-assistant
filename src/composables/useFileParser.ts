@@ -115,8 +115,11 @@ export function useFileParser() {
         // 初始化页码范围
         let pageRange = '1';
         
-        // 提取核心元数据 (core.xml) - 使用简化的正则表达式提取，避免完整DOM解析
+        // 先获取所有需要的元数据文件，避免作用域问题
         const coreXmlFile = zip.file('docProps/core.xml');
+        const appXmlFile = zip.file('docProps/app.xml');
+        
+        // 提取核心元数据 (core.xml) - 使用简化的正则表达式提取，避免完整DOM解析
         if (coreXmlFile) {
           try {
             const coreXmlContent = await coreXmlFile.async('string');
@@ -133,6 +136,34 @@ export function useFileParser() {
             if (lastModifiedByMatch && lastModifiedByMatch[1]) {
               properties.最后一次保存者 = lastModifiedByMatch[1];
             }
+            
+            // 提取公司信息
+            let companyInfo = '';
+            
+            // 1. 从core.xml中提取公司信息，支持多种标签格式
+            const coreCompanyPattern = /<(?:cp:|dc:|xmp:|)(?:company|Company|Organization|organization)[^>]*>([\s\S]*?)<\/(?:cp:|dc:|xmp:|)(?:company|Company|Organization|organization)>/i;
+            const coreCompanyMatch = coreXmlContent.match(coreCompanyPattern);
+            if (coreCompanyMatch && coreCompanyMatch[1]) {
+              companyInfo = coreCompanyMatch[1].trim();
+            }
+            
+            // 2. 如果core.xml中没有，尝试从app.xml中提取
+            if (!companyInfo && appXmlFile) {
+              try {
+                const appXmlContent = await appXmlFile.async('string');
+                const appCompanyPattern = /<(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)[^>]*>([\s\S]*?)<\/(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)>/i;
+                const appCompanyMatch = appXmlContent.match(appCompanyPattern);
+                if (appCompanyMatch && appCompanyMatch[1]) {
+                  companyInfo = appCompanyMatch[1].trim();
+                }
+              } catch (error) {
+                console.log('Error extracting company from app.xml:', error);
+              }
+            }
+            
+            // 3. 确保公司属性始终有值，避免显示"未知"
+            // 如果提取到了公司信息，使用它，否则使用默认值
+            properties.公司 = companyInfo || '未知';
             
             const createdMatch = coreXmlContent.match(/<dcterms:created[^>]*>([^<]+)<\/dcterms:created>/i) ||
                                coreXmlContent.match(/<created[^>]*>([^<]+)<\/created>/i);
@@ -151,9 +182,8 @@ export function useFileParser() {
         }
         
         // 提取扩展元数据 (app.xml) - 简化处理，避免长时间阻塞
-        const appXmlFile = zip.file('docProps/app.xml');
         if (appXmlFile) {
-          // 简化处理，只提取必要的页码信息
+          // 简化处理，提取页码信息和其他属性
           try {
             const appXmlContent = await appXmlFile.async('string');
             
@@ -173,10 +203,22 @@ export function useFileParser() {
             // 设置页码范围
             properties.页码范围 = pageRange;
             
-            // 只提取基本属性，避免复杂DOM操作
+            // 提取程序名称
             const appMatch = appXmlContent.match(/<Application[^>]*>([^<]+)<\/Application>/i);
             if (appMatch && appMatch[1]) {
               properties.程序名称 = appMatch[1];
+            }
+            
+            // 再次尝试从app.xml提取公司信息，确保不会遗漏
+            if (!properties.公司 || properties.公司 === '未知') {
+              const appCompanyPattern = /<(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)[^>]*>([\s\S]*?)<\/(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)>/i;
+              const appCompanyMatch = appXmlContent.match(appCompanyPattern);
+              if (appCompanyMatch && appCompanyMatch[1]) {
+                const appCompanyInfo = appCompanyMatch[1].trim();
+                if (appCompanyInfo) {
+                  properties.公司 = appCompanyInfo;
+                }
+              }
             }
           } catch (error) {
             console.log('简化处理app.xml时出错:', error);
@@ -257,23 +299,82 @@ export function useFileParser() {
       // 关闭PDF文档
       await pdfDocument.destroy();
       
+      // 尝试提取PDF元数据
+      let pdfProperties = {
+        文件名: file.name,
+        文件大小: formatFileSize(file.size),
+        文件类型: 'PDF文档',
+        作者: '未知作者',
+        最后一次保存者: '未知用户',
+        页码范围: `1-${pageCount}`,
+        版本号: '1.0',
+        程序名称: '未知',
+        公司: '未知',
+        文本内容长度: textContent.length.toString(),
+        创建时间: new Date(file.lastModified).toLocaleString(),
+        修改时间: new Date(file.lastModified).toLocaleString()
+      };
+      
+      try {
+        // 获取PDF元数据
+        const metadata = pdfDocument.metadata;
+        if (metadata) {
+          // 提取作者信息
+          if (metadata.Author) {
+            pdfProperties.作者 = metadata.Author;
+          }
+          
+          // 提取程序名称
+          if (metadata.Producer) {
+            pdfProperties.程序名称 = metadata.Producer;
+          } else if (metadata.Creator) {
+            pdfProperties.程序名称 = metadata.Creator;
+          }
+          
+          // 尝试从元数据中提取公司信息
+          // 检查常见的公司相关字段
+          const companyFields = ['Company', 'Organization', 'Producer', 'Creator'];
+          for (const field of companyFields) {
+            if (metadata[field]) {
+              const value = metadata[field].toString();
+              // 检查是否包含公司相关关键词
+              if (value && !pdfProperties.公司) {
+                pdfProperties.公司 = value;
+                break;
+              }
+            }
+          }
+          
+          // 尝试从创建时间和修改时间中提取
+          if (metadata.CreationDate) {
+            try {
+              // PDF日期格式通常为D:YYYYMMDDHHmmSSOHH'mm'
+              const pdfDate = metadata.CreationDate.toString();
+              const dateStr = pdfDate.replace(/^D:/, '').replace(/([+-]\d{2})'(\d{2})'$/, '$1:$2');
+              pdfProperties.创建时间 = new Date(dateStr).toLocaleString();
+            } catch (e) {
+              // 如果解析失败，使用文件的最后修改时间
+            }
+          }
+          
+          if (metadata.ModDate) {
+            try {
+              const pdfDate = metadata.ModDate.toString();
+              const dateStr = pdfDate.replace(/^D:/, '').replace(/([+-]\d{2})'(\d{2})'$/, '$1:$2');
+              pdfProperties.修改时间 = new Date(dateStr).toLocaleString();
+            } catch (e) {
+              // 如果解析失败，使用文件的最后修改时间
+            }
+          }
+        }
+      } catch (metadataError) {
+        console.log('提取PDF元数据时发生错误:', metadataError);
+      }
+      
       // 返回解析结果
       return {
         content: textContent,
-        properties: {
-          文件名: file.name,
-          文件大小: formatFileSize(file.size),
-          文件类型: 'PDF文档',
-          作者: '未知作者',
-          最后一次保存者: '未知用户',
-          页码范围: `1-${pageCount}`,
-          版本号: '1.0',
-          程序名称: '未知',
-          公司: '',
-          文本内容长度: textContent.length.toString(),
-          创建时间: new Date(file.lastModified).toLocaleString(),
-          修改时间: new Date(file.lastModified).toLocaleString()
-        },
+        properties: pdfProperties,
         pages: pageCount
       };
     } catch (error) {
@@ -290,7 +391,7 @@ export function useFileParser() {
           页码范围: '1',
           版本号: '1.0',
           程序名称: '未知',
-          公司: '',
+          公司: '未知',
           文本内容长度: '0',
           创建时间: new Date(file.lastModified).toLocaleString(),
           修改时间: new Date(file.lastModified).toLocaleString()
@@ -383,26 +484,59 @@ export function useFileParser() {
         const JSZip = JSZipModule.default;
         const zip = await JSZip.loadAsync(arrayBuffer);
         
-        // 提取核心元数据 (core.xml)
+        // 先获取所有需要的元数据文件
         const coreXmlFile = zip.file('docProps/core.xml');
+        const appXmlFile = zip.file('docProps/app.xml');
+        
+        // 提取核心元数据 (core.xml)
         if (coreXmlFile) {
           const coreXmlContent = await coreXmlFile.async('string');
-          const coreDoc = new DOMParser().parseFromString(coreXmlContent, 'application/xml');
           
-          // 简化的作者提取（处理命名空间问题）
-          const creatorElements = coreDoc.getElementsByTagNameNS('http://purl.org/dc/elements/1.1/', 'creator');
-          if (creatorElements.length > 0 && creatorElements[0].textContent) {
-            properties.作者 = creatorElements[0].textContent;
+          // 使用正则表达式提取元数据，避免完整DOM解析
+          const creatorMatch = coreXmlContent.match(/<dc:creator[^>]*>([^<]+)<\/dc:creator>/i) || 
+                              coreXmlContent.match(/<creator[^>]*>([^<]+)<\/creator>/i);
+          if (creatorMatch && creatorMatch[1]) {
+            properties.作者 = creatorMatch[1];
           }
           
-          // 简化的最后保存者提取
-          const lastModifiedByElements = coreDoc.getElementsByTagNameNS('http://schemas.openxmlformats.org/package/2006/metadata/core-properties', 'lastModifiedBy');
-          if (lastModifiedByElements.length > 0 && lastModifiedByElements[0].textContent) {
-            properties.最后一次保存者 = lastModifiedByElements[0].textContent;
+          const lastModifiedByMatch = coreXmlContent.match(/<cp:lastModifiedBy[^>]*>([^<]+)<\/cp:lastModifiedBy>/i) ||
+                                     coreXmlContent.match(/<lastModifiedBy[^>]*>([^<]+)<\/lastModifiedBy>/i);
+          if (lastModifiedByMatch && lastModifiedByMatch[1]) {
+            properties.最后一次保存者 = lastModifiedByMatch[1];
           }
+          
+          // 提取公司信息
+          // 支持多种来源和格式
+          let companyInfo = '';
+          
+          // 1. 从core.xml中提取公司信息，支持多种标签格式和名称
+          const coreCompanyPattern = /<(?:cp:|dc:|xmp:|)(?:company|Company|Organization|organization)[^>]*>([\s\S]*?)<\/(?:cp:|dc:|xmp:|)(?:company|Company|Organization|organization)>/i;
+          const coreCompanyMatch = coreXmlContent.match(coreCompanyPattern);
+          if (coreCompanyMatch && coreCompanyMatch[1]) {
+            companyInfo = coreCompanyMatch[1].trim();
+          }
+          
+          // 2. 如果core.xml中没有，尝试从app.xml中提取
+          if (!companyInfo && appXmlFile) {
+            try {
+              const appXmlContent = await appXmlFile.async('string');
+              const appCompanyPattern = /<(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)[^>]*>([\s\S]*?)<\/(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)>/i;
+              const appCompanyMatch = appXmlContent.match(appCompanyPattern);
+              if (appCompanyMatch && appCompanyMatch[1]) {
+                companyInfo = appCompanyMatch[1].trim();
+              }
+            } catch (error) {
+              console.log('Error extracting company from app.xml:', error);
+            }
+          }
+          
+          // 3. 更新公司属性，确保始终有值
+          properties.公司 = companyInfo || '未知';
         }
       } catch (zipError) {
         console.log('提取XLSX元数据时发生错误，使用默认值:', zipError);
+        // 确保公司属性有默认值
+        properties.公司 = properties.公司 || '未知';
       }
       
       // 返回Excel文件的解析结果
@@ -458,6 +592,8 @@ export function useFileParser() {
         
         // 提取核心元数据 (core.xml) - 简化处理
         const coreXmlFile = zip.file('docProps/core.xml');
+        const appXmlFile = zip.file('docProps/app.xml');
+        
         if (coreXmlFile) {
           const coreXmlContent = await coreXmlFile.async('string');
           
@@ -473,6 +609,37 @@ export function useFileParser() {
           if (lastModifiedByMatch && lastModifiedByMatch[1]) {
             properties.最后一次保存者 = lastModifiedByMatch[1];
           }
+          
+          // 提取公司信息
+          // 支持多种来源和格式
+          let companyInfo = '';
+          
+          // 1. 从core.xml中提取公司信息，支持多种标签格式和名称
+          const coreCompanyPattern = /<(?:cp:|dc:|xmp:|)(?:company|Company|Organization|organization)[^>]*>([\s\S]*?)<\/(?:cp:|dc:|xmp:|)(?:company|Company|Organization|organization)>/i;
+          const coreCompanyMatch = coreXmlContent.match(coreCompanyPattern);
+          if (coreCompanyMatch && coreCompanyMatch[1]) {
+            companyInfo = coreCompanyMatch[1].trim();
+          }
+          
+          // 2. 如果core.xml中没有，尝试从app.xml中提取
+          if (!companyInfo && appXmlFile) {
+            try {
+              const appXmlContent = await appXmlFile.async('string');
+              const appCompanyPattern = /<(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)[^>]*>([\s\S]*?)<\/(?:Company|ApplicationCompany|ApplicationVendor|company|applicationcompany|applicationvendor|Organization|organization)>/i;
+              const appCompanyMatch = appXmlContent.match(appCompanyPattern);
+              if (appCompanyMatch && appCompanyMatch[1]) {
+                companyInfo = appCompanyMatch[1].trim();
+              }
+            } catch (error) {
+              console.log('Error extracting company from app.xml:', error);
+            }
+          }
+          
+          // 3. 更新公司属性，确保始终有值
+          properties.公司 = companyInfo || '未知';
+        } else {
+          // 确保公司属性始终有值
+          properties.公司 = '未知';
         }
         
         // 提取幻灯片数量和内容

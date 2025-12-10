@@ -288,6 +288,22 @@ const handleDrop = (event: DragEvent, side: 'left' | 'right') => {
   }
 }
 
+// 清除文件处理
+const handleClearFile = (side: 'left' | 'right') => {
+  const emptyFileInfo = {
+    file: null,
+    name: '',
+    size: '',
+    type: ''
+  };
+  
+  if (side === 'left') {
+    leftFileInfo.value = emptyFileInfo;
+  } else {
+    rightFileInfo.value = emptyFileInfo;
+  }
+}
+
 // 文本预处理（根据设置调整）
 const preprocessText = (text: string): string => {
   // 检查text是否为undefined或null
@@ -694,6 +710,7 @@ const generateWordReport = () => {
         :on-file-change="handleFileUpload"
         :on-drag-over="handleDragOver"
         :on-drop="handleDrop"
+        :on-clear-file="handleClearFile"
       />
 
       <!-- 检查按钮 -->
@@ -710,6 +727,7 @@ const generateWordReport = () => {
         :on-file-change="handleFileUpload"
         :on-drag-over="handleDragOver"
         :on-drop="handleDrop"
+        :on-clear-file="handleClearFile"
       />
     </div>
 
