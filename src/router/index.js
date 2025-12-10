@@ -1,0 +1,46 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import FileCompare from '../components/FileCompare.vue'
+import PropertyCheck from '../components/PropertyCheck.vue'
+import SystemSettings from '../components/SystemSettings.vue'
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/file-compare'
+  },
+  { 
+    path: '/file-compare',
+    name: 'FileCompare',
+    component: FileCompare,
+    meta: { title: '文件对对碰 - 文件对比' }
+  },
+  {
+    path: '/property-check',
+    name: 'PropertyCheck',
+    component: PropertyCheck,
+    meta: { title: '文件对对碰 - 属性检查' }
+  },
+  {
+    path: '/settings',
+    name: 'SystemSettings',
+    component: SystemSettings,
+    meta: {
+      title: '文件对对碰 - 系统设置'
+    }
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
+// 设置页面标题
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+
+export default router

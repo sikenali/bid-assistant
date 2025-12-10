@@ -1,0 +1,52 @@
+{
+  "name": "bid-assistant",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:nw": "npm run build && nwbuild --platforms win64,linux64,osx64 --output build"
+  },
+  "dependencies": {
+    "@remixicon/vue": "^4.7.0",
+    "docx": "^9.5.1",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.11.0",
+    "pdf-parse": "^2.4.5",
+    "react-icons": "^5.5.0",
+    "vue": "^3.5.24",
+    "vue-icons-plus": "^0.1.8",
+    "vue-router": "^4.6.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "nw": "^0.106.0",
+    "nwjs-builder-phoenix": "^1.15.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vue-tsc": "^3.1.4"
+  },
+  "build": {
+    "nwVersion": "0.97.0",
+    "output": "./build",
+    "packed": true,
+    "targets": [
+      "win64",
+      "linux64",
+      "osx64"
+    ],
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "excludes": [
+      ".git",
+      "node_modules/**/*"
+    ]
+  }
+}
