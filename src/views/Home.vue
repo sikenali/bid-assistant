@@ -11,10 +11,10 @@
       </div>
       <div class="navbar-actions">
         <button class="btn-icon credit-btn" title="信用资质" @click="showCreditModal = true">
-          <i class="ri-id-card-line"></i>
+          <i class="ri-shield-check-line"></i>
         </button>
         <button class="btn-icon settings-btn" title="投标网站" @click="showSettingsModal = true">
-          <i class="ri-briefcase-3-line"></i>
+          <i class="ri-links-line"></i>
         </button>
       </div>
     </header>
@@ -44,7 +44,7 @@
             <p class="card-desc">{{ card.desc }}</p>
             <div class="card-accent" :style="{ background: card.color }"></div>
           </div>
-          <div class="shelf-base" :style="{ background: card.shelfColor }" :class="`shelf-base-${index}`"></div>
+          <div class="shelf-base" :style="hoverIndex === index ? { background: card.color } : { background: card.shelfColor }" @mouseenter="hoverIndex = index" @mouseleave="hoverIndex = null"></div>
         </div>
       </section>
 
@@ -79,6 +79,7 @@ import CreditQualificationModal from '@/components/CreditQualificationModal.vue'
 
 const showSettingsModal = ref(false)
 const showCreditModal = ref(false)
+const hoverIndex = ref(null)
 
 const cards = [
   {
@@ -259,23 +260,6 @@ function handleCardClick(card) {
 .shelf-item:hover .shelf-base {
   width: 214px;
   box-shadow: 0 6px 16px rgba(196, 58, 49, 0.15);
-}
-
-/* Per-card shelf base hover color */
-.shelf-item:hover .shelf-base-0 {
-  background: rgba(196, 58, 49, 1);
-}
-.shelf-item:hover .shelf-base-1 {
-  background: rgba(200, 164, 92, 1);
-}
-.shelf-item:hover .shelf-base-2 {
-  background: rgba(91, 140, 90, 1);
-}
-.shelf-item:hover .shelf-base-3 {
-  background: rgba(123, 158, 179, 1);
-}
-.shelf-item:hover .shelf-base-4 {
-  background: rgba(184, 84, 80, 1);
 }
 
 .card-body {
