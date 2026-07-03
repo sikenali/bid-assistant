@@ -4,14 +4,17 @@
     <header class="navbar">
       <div class="navbar-brand">
         <div class="logo-icon">
-          <i class="ri-bookmark-2-fill"></i>
+          <i class="ri-bookmark-2-line"></i>
         </div>
         <span class="brand-name">猩文标聚</span>
         <span class="brand-sub">sikenali · 文档智能处理平台</span>
       </div>
       <div class="navbar-actions">
-        <button class="btn-icon settings-btn" title="设置">
-          <i class="ri-settings-3-line"></i>
+        <button class="btn-icon credit-btn" title="信用资质" @click="showCreditModal = true">
+          <i class="ri-id-card-line"></i>
+        </button>
+        <button class="btn-icon settings-btn" title="投标网站" @click="showSettingsModal = true">
+          <i class="ri-briefcase-3-line"></i>
         </button>
       </div>
     </header>
@@ -33,9 +36,9 @@
           class="shelf-item"
           @click="handleCardClick(card)"
         >
-          <div class="card-body" :style="{ background: card.bgGradient, borderColor: card.stroke }">
+          <div class="card-body">
             <div class="card-icon" :style="{ background: card.iconBg }">
-              <i class="ri-custom-icon" :style="{ color: card.color, fontSize: '36px' }">&#x{{ card.iconUnicode.slice(2) }};</i>
+              <i :class="card.icon" :style="{ color: card.color }"></i>
             </div>
             <h3 class="card-title">{{ card.title }}</h3>
             <p class="card-desc">{{ card.desc }}</p>
@@ -60,74 +63,73 @@
         <span>© 2026 猩文标聚 sikenali</span>
       </footer>
     </main>
+
+    <!-- Bidding Sites Modal -->
+    <BiddingSitesModal v-model:visible="showSettingsModal" />
+    
+    <!-- Credit Qualification Modal -->
+    <CreditQualificationModal v-model:visible="showCreditModal" />
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import BiddingSitesModal from '@/components/BiddingSitesModal.vue'
+import CreditQualificationModal from '@/components/CreditQualificationModal.vue'
 
-const router = useRouter()
+const showSettingsModal = ref(false)
+const showCreditModal = ref(false)
 
 const cards = [
   {
     title: '文取猩',
     desc: '智能采集',
-    iconUnicode: '\uec56',
-    color: 'rgba(196,58,49,1)',
-    iconBg: 'rgba(253,242,238,1)',
-    stroke: 'rgba(232,213,192,1)',
-    bgGradient: 'linear-gradient(180deg, rgba(255,248,240,1) 0%, rgba(255,253,248,1) 100%)',
-    shelfColor: 'rgba(212,196,168,1)',
-    url: '/collection'
+    icon: 'ri-inbox-line',
+    color: 'var(--brand-red)',
+    iconBg: 'rgba(253, 242, 238, 1)',
+    shelfColor: 'var(--border-gold)',
+    url: 'https://example.com/collection'
   },
   {
     title: '文制猩',
     desc: '智能生成',
-    iconUnicode: '\uecf6',
-    color: 'rgba(200,164,92,1)',
-    iconBg: 'rgba(253,248,232,1)',
-    stroke: 'rgba(224,216,184,1)',
-    bgGradient: 'linear-gradient(180deg, rgba(255,253,245,1) 0%, rgba(255,254,248,1) 100%)',
-    shelfColor: 'rgba(212,196,168,1)',
+    icon: 'ri-pencil-line',
+    color: 'var(--brand-gold)',
+    iconBg: 'rgba(253, 248, 232, 1)',
+    shelfColor: 'var(--border-gold)',
     url: 'https://example.com/generate'
   },
   {
     title: '文检猩',
     desc: '智能校验',
-    iconUnicode: '\ueb79',
-    color: 'rgba(91,140,90,1)',
-    iconBg: 'rgba(237,245,237,1)',
-    stroke: 'rgba(200,220,200,1)',
-    bgGradient: 'linear-gradient(180deg, rgba(245,250,245,1) 0%, rgba(248,252,248,1) 100%)',
-    shelfColor: 'rgba(212,196,168,1)',
+    icon: 'ri-checkbox-circle-line',
+    color: 'var(--brand-green)',
+    iconBg: 'rgba(237, 245, 237, 1)',
+    shelfColor: 'var(--border-gold)',
     url: 'https://example.com/verify'
   },
   {
     title: '文版猩',
     desc: '智能排版',
-    iconUnicode: '\ueea5',
-    color: 'rgba(123,158,179,1)',
-    iconBg: 'rgba(237,242,247,1)',
-    stroke: 'rgba(200,212,224,1)',
-    bgGradient: 'linear-gradient(180deg, rgba(245,248,251,1) 0%, rgba(248,250,252,1) 100%)',
-    shelfColor: 'rgba(212,196,168,1)',
+    icon: 'ri-layout-masonry-line',
+    color: 'var(--brand-blue)',
+    iconBg: 'rgba(237, 242, 247, 1)',
+    shelfColor: 'var(--border-gold)',
     url: 'https://example.com/layout'
   },
   {
     title: '文比猩',
     desc: '智能比对',
-    iconUnicode: '\ue8f7',
-    color: 'rgba(184,84,80,1)',
-    iconBg: 'rgba(250,238,238,1)',
-    stroke: 'rgba(232,208,208,1)',
-    bgGradient: 'linear-gradient(180deg, rgba(253,245,245,1) 0%, rgba(255,248,248,1) 100%)',
-    shelfColor: 'rgba(212,196,168,1)',
+    icon: 'ri-git-commit-line',
+    color: 'var(--brand-pink)',
+    iconBg: 'rgba(250, 238, 238, 1)',
+    shelfColor: 'var(--border-gold)',
     url: 'https://example.com/compare'
   },
 ]
 
 function handleCardClick(card) {
-  router.push(card.url)
+  window.open(card.url, '_blank')
 }
 </script>
 
@@ -175,25 +177,6 @@ function handleCardClick(card) {
   font-size: 12px;
   color: var(--text-secondary);
   margin-left: -4px;
-}
-
-.btn-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-round);
-  background: var(--bg-white);
-  border: 0.7px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: rgba(91, 74, 58, 1);
-  transition: box-shadow 0.2s;
-}
-
-.btn-icon:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Content */
@@ -261,9 +244,10 @@ function handleCardClick(card) {
 .card-body {
   width: 180px;
   height: 220px;
+  background: linear-gradient(180deg, rgba(255, 248, 240, 1) 0%, rgba(255, 253, 248, 1) 100%);
   border: 0.7px solid var(--border-light);
   border-radius: var(--radius-card);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
   padding: 28px 20px;
   display: flex;
   flex-direction: column;
@@ -278,13 +262,7 @@ function handleCardClick(card) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'remixicon';
   font-size: 36px;
-  line-height: 1;
-}
-
-.card-icon::before {
-  content: attr(data-icon);
 }
 
 .card-title {
@@ -313,7 +291,7 @@ function handleCardClick(card) {
   height: 10px;
   background: var(--border-gold);
   border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Footer Decoration */
@@ -358,5 +336,40 @@ function handleCardClick(card) {
   font-size: 12px;
   color: var(--text-light);
   letter-spacing: 1px;
+}
+
+/* Navbar Actions */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-round);
+  background: var(--bg-white);
+  border: 0.7px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: rgba(91, 74, 58, 1);
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.credit-btn {
+  color: rgba(91, 74, 58, 1);
+}
+
+.settings-btn {
+  color: rgba(91, 74, 58, 1);
 }
 </style>
