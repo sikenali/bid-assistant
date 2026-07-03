@@ -244,20 +244,42 @@ function showToast(message) {
 .site-card {
   width: 150px;
   height: 150px;
-  background: rgba(255, 253, 248, 1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 253, 248, 1) 100%);
   border: 0.7px solid rgba(232, 213, 192, 1);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px 8px 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.site-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(196, 58, 49, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .site-card:hover {
-  box-shadow: 0 4px 16px rgba(196, 58, 49, 0.12);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196, 58, 49, 0.1),
+              0 2px 8px rgba(0, 0, 0, 0.04);
+  transform: translateY(-3px);
+  border-color: rgba(232, 213, 192, 0.8);
+}
+
+.site-card:hover::before {
+  opacity: 1;
 }
 
 .site-card-top {
@@ -323,30 +345,34 @@ function showToast(message) {
   min-width: 0;
 }
 
-/* URL Tooltip - always visible */
+/* URL Tooltip */
 .site-url-tooltip {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   flex: 1;
   min-width: 0;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(245, 240, 232, 0.6);
-  transition: background 0.2s;
-  cursor: default;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(245, 240, 232, 0);
+  transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
 }
 
 .site-card:hover .site-url-tooltip {
-  background: rgba(245, 240, 232, 1);
+  background: rgba(245, 240, 232, 0.8);
 }
 
 .site-url-icon {
   font-size: 13px;
-  color: rgba(123, 158, 179, 1);
+  color: rgba(196, 58, 49, 0.6);
   line-height: 1;
   flex-shrink: 0;
+  transition: color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.site-card:hover .site-url-icon {
+  color: rgba(196, 58, 49, 1);
 }
 
 .site-url-text {
@@ -356,6 +382,11 @@ function showToast(message) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.25s;
+}
+
+.site-card:hover .site-url-text {
+  color: rgba(123, 158, 179, 0.9);
 }
 
 /* Copy Button */

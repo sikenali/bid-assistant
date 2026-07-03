@@ -57,12 +57,12 @@
         </div>
         <p class="footer-slogan">回旋有术 · 文档无忧</p>
       </section>
-
-      <!-- Footer -->
-      <footer class="app-footer">
-        <span>© 2026 猩文标聚</span>
-      </footer>
     </main>
+
+    <!-- Footer Bar -->
+    <footer class="app-footer">
+      <span>© 2026 猩文标聚</span>
+    </footer>
 
     <!-- Bidding Sites Modal -->
     <BiddingSitesModal v-model:visible="showSettingsModal" />
@@ -356,13 +356,14 @@ function handleCardClick(card) {
   letter-spacing: 2px;
 }
 
-/* Footer */
+/* Footer Bar */
 .app-footer {
   width: 100%;
   padding: 16px 40px;
+  background: rgba(245, 240, 232, 1);
   text-align: center;
   font-size: 12px;
-  color: var(--text-light);
+  color: rgba(184, 168, 138, 1);
   letter-spacing: 1px;
 }
 

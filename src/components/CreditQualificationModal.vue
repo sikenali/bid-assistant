@@ -234,7 +234,7 @@ function showToast(message) {
 .website-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 32px;
 }
 
@@ -243,13 +243,42 @@ function showToast(message) {
   width: 100%;
   min-width: 0;
   height: 140px;
-  background: rgba(255, 253, 248, 1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 253, 248, 1) 100%);
   border: 0.7px solid rgba(232, 213, 192, 1);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px 8px 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.site-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(196, 58, 49, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.site-card:hover {
+  box-shadow: 0 8px 24px rgba(196, 58, 49, 0.1),
+              0 2px 8px rgba(0, 0, 0, 0.04);
+  transform: translateY(-3px);
+  border-color: rgba(232, 213, 192, 0.8);
+}
+
+.site-card:hover::before {
+  opacity: 1;
 }
 
 .site-card-top {
