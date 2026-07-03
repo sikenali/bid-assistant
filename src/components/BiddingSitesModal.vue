@@ -27,7 +27,15 @@
               class="site-card"
             >
               <div class="site-card-top">
-                <div class="site-logo" :style="{ backgroundImage: site.logo ? `url(${site.logo})` : '' }"></div>
+                <div class="site-logo" :style="{ backgroundImage: site.logo ? `url(${site.logo})` : '' }">
+                <img
+                  v-if="!site.logo"
+                  :src="`https://www.google.com/s2/favicons?domain=${site.url}&sz=64`"
+                  :alt="site.name"
+                  class="site-favicon"
+                  @error="onFaviconError(site, index)"
+                />
+              </div>
                 <div class="site-info">
                   <h3 class="site-name">{{ site.name }}</h3>
                   <p class="site-desc">{{ site.desc }}</p>
@@ -100,6 +108,10 @@ const biddingSites = [
   { name: '能源招标网', desc: '能源行业招标', url: 'www.nyzb.com', logo: '' },
   { name: '农业招标网', desc: '农业工程招标', url: 'www.nyzbw.com', logo: '' },
 ]
+
+function onFaviconError(site) {
+  site.logo = ''
+}
 
 async function copyUrl(url) {
   const fullUrl = `http://${url}`
@@ -299,6 +311,16 @@ function showToast(message) {
   background-size: cover;
   background-position: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.site-favicon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .site-info {
