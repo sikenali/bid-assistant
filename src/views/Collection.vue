@@ -6,8 +6,8 @@
         <div class="logo-icon">
           <i class="ri-bookmark-2-line"></i>
         </div>
-        <span class="brand-name">回旋标</span>
-        <span class="brand-sub">Boomerang · 文档智能处理平台</span>
+        <span class="brand-name">猩文标聚</span>
+        <span class="brand-sub">sikenali · 文档智能处理平台</span>
       </div>
       <div class="navbar-actions">
         <button class="btn-icon back-btn" @click="$router.push('/')" title="返回首页">
