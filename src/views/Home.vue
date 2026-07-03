@@ -44,7 +44,7 @@
             <p class="card-desc">{{ card.desc }}</p>
             <div class="card-accent" :style="{ background: card.color }"></div>
           </div>
-          <div class="shelf-base" :style="{ background: card.shelfColor }"></div>
+          <div class="shelf-base" :style="{ background: card.shelfColor }" :class="`shelf-base-${index}`"></div>
         </div>
       </section>
 
@@ -60,7 +60,7 @@
 
       <!-- Footer -->
       <footer class="app-footer">
-        <span>© 2026 猩文标聚 sikenali</span>
+        <span>© 2026 猩文标聚</span>
       </footer>
     </main>
 
@@ -234,28 +234,48 @@ function handleCardClick(card) {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  perspective: 800px;
 }
 
 .shelf-item:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
 }
 
 .shelf-item:hover .card-body {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 40px rgba(196, 58, 49, 0.12),
+              0 4px 12px rgba(0, 0, 0, 0.06);
   border-color: var(--brand-red);
+  transform: translateY(-2px);
 }
 
 .shelf-item:hover .card-icon {
-  transform: scale(1.08);
+  transform: scale(1.1) rotate(-2deg);
 }
 
 .shelf-item:hover .card-accent {
-  width: 24px;
+  width: 32px;
 }
 
 .shelf-item:hover .shelf-base {
-  width: 210px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  width: 214px;
+  box-shadow: 0 6px 16px rgba(196, 58, 49, 0.15);
+}
+
+/* Per-card shelf base hover color */
+.shelf-item:hover .shelf-base-0 {
+  background: rgba(196, 58, 49, 1);
+}
+.shelf-item:hover .shelf-base-1 {
+  background: rgba(200, 164, 92, 1);
+}
+.shelf-item:hover .shelf-base-2 {
+  background: rgba(91, 140, 90, 1);
+}
+.shelf-item:hover .shelf-base-3 {
+  background: rgba(123, 158, 179, 1);
+}
+.shelf-item:hover .shelf-base-4 {
+  background: rgba(184, 84, 80, 1);
 }
 
 .card-body {
@@ -270,9 +290,9 @@ function handleCardClick(card) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .card-icon {
@@ -283,7 +303,7 @@ function handleCardClick(card) {
   align-items: center;
   justify-content: center;
   font-size: 36px;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .card-accent {
@@ -291,7 +311,7 @@ function handleCardClick(card) {
   width: 9px;
   height: 8px;
   border-radius: 4px;
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .card-title {
@@ -314,8 +334,8 @@ function handleCardClick(card) {
   background: var(--border-gold);
   border-radius: 3px;
   box-shadow: var(--shadow-lg);
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Footer Decoration */
