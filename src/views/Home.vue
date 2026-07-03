@@ -7,7 +7,7 @@
           <i class="ri-target-line"></i>
         </div>
         <span class="brand-name">猩文标聚</span>
-        <span class="brand-sub">sikenali · 文档智能处理平台</span>
+        <span class="brand-sub">文档智能处理平台</span>
       </div>
       <div class="navbar-actions">
         <button class="btn-icon credit-btn" title="信用资质" @click="showCreditModal = true">
@@ -234,11 +234,28 @@ function handleCardClick(card) {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s;
 }
 
 .shelf-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+}
+
+.shelf-item:hover .card-body {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  border-color: var(--brand-red);
+}
+
+.shelf-item:hover .card-icon {
+  transform: scale(1.08);
+}
+
+.shelf-item:hover .card-accent {
+  width: 24px;
+}
+
+.shelf-item:hover .shelf-base {
+  width: 210px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .card-body {
@@ -253,6 +270,9 @@ function handleCardClick(card) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-icon {
@@ -263,6 +283,15 @@ function handleCardClick(card) {
   align-items: center;
   justify-content: center;
   font-size: 36px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-accent {
+  margin-top: 8px;
+  width: 9px;
+  height: 8px;
+  border-radius: 4px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-title {
@@ -278,13 +307,6 @@ function handleCardClick(card) {
   color: var(--text-muted);
 }
 
-.card-accent {
-  margin-top: 8px;
-  width: 9px;
-  height: 8px;
-  border-radius: 4px;
-}
-
 .shelf-base {
   margin-top: 4px;
   width: 201px;
@@ -292,6 +314,8 @@ function handleCardClick(card) {
   background: var(--border-gold);
   border-radius: 3px;
   box-shadow: var(--shadow-lg);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Footer Decoration */
@@ -357,19 +381,18 @@ function handleCardClick(card) {
   justify-content: center;
   font-size: 22px;
   color: rgba(91, 74, 58, 1);
-  transition: box-shadow 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .btn-icon:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(196, 58, 49, 0.12);
+  border-color: rgba(196, 58, 49, 0.3);
+  color: var(--brand-red);
+  transform: translateY(-1px);
 }
 
-.credit-btn {
-  color: rgba(91, 74, 58, 1);
-}
-
-.settings-btn {
-  color: rgba(91, 74, 58, 1);
+.btn-icon:active {
+  transform: translateY(0) scale(0.96);
 }
 </style>
