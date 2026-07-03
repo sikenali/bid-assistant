@@ -34,10 +34,11 @@
                 </div>
               </div>
               <div class="site-card-bottom">
-                <span class="site-url-wrapper">
+                <span class="site-url-tooltip" :title="site.url">
                   <i class="ri-global-line site-url-icon"></i>
+                  <span class="site-url-text">{{ site.url }}</span>
                 </span>
-                <button class="copy-btn" @click="copyUrl(site.url)">
+                <button class="copy-btn" @click="copyUrl(site.url)" title="复制网址">
                   <i class="ri-file-copy-line"></i>
                 </button>
               </div>
@@ -344,35 +345,48 @@ function showToast(message) {
   min-width: 0;
 }
 
-.site-url-wrapper {
+/* URL Tooltip */
+.site-url-tooltip {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transform: scale(0.6);
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(245, 240, 232, 0);
+  transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
 }
 
-.site-card:hover .site-url-wrapper {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.site-url-wrapper:hover {
-  background: rgba(253, 242, 238, 1);
+.site-card:hover .site-url-tooltip {
+  background: rgba(245, 240, 232, 0.8);
 }
 
 .site-url-icon {
-  font-size: 14px;
-  color: rgba(196, 58, 49, 1);
+  font-size: 13px;
+  color: rgba(196, 58, 49, 0.6);
   line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.site-card:hover .site-url-icon {
+  color: rgba(196, 58, 49, 1);
+}
+
+.site-url-text {
+  font-size: 9px;
+  color: rgba(123, 158, 179, 1);
+  line-height: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s;
+}
+
+.site-card:hover .site-url-text {
+  color: rgba(123, 158, 179, 0.9);
 }
 
 .copy-btn {
@@ -388,6 +402,16 @@ function showToast(message) {
   cursor: pointer;
   border: none;
   flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.copy-btn:hover {
+  background: rgba(196, 58, 49, 0.1);
+  transform: scale(1.1);
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
 }
 
 /* Panel Footer */

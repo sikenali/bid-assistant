@@ -242,8 +242,9 @@ function showToast(message) {
 
 /* Site Card */
 .site-card {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  min-width: 0;
+  height: 140px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 253, 248, 1) 100%);
   border: 0.7px solid rgba(232, 213, 192, 1);
   border-radius: 12px;

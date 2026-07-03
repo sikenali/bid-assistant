@@ -377,27 +377,63 @@ function handleCardClick(card) {
 .btn-icon {
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-round);
-  background: var(--bg-white);
-  border: 0.7px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 0.7px solid rgba(232, 213, 192, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   color: rgba(91, 74, 58, 1);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(196, 58, 49, 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .btn-icon:hover {
-  box-shadow: 0 4px 16px rgba(196, 58, 49, 0.12);
-  border-color: rgba(196, 58, 49, 0.3);
-  color: var(--brand-red);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(196, 58, 49, 0.12),
+              0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: rgba(196, 58, 49, 0.25);
+  color: rgba(196, 58, 49, 1);
+  transform: translateY(-2px);
+}
+
+.btn-icon:hover::before {
+  opacity: 1;
 }
 
 .btn-icon:active {
-  transform: translateY(0) scale(0.96);
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 2px 8px rgba(196, 58, 49, 0.08);
+}
+
+.credit-btn {
+  color: rgba(91, 74, 58, 1);
+}
+
+.credit-btn:hover {
+  color: rgba(196, 58, 49, 1);
+}
+
+.settings-btn {
+  color: rgba(91, 74, 58, 1);
+}
+
+.settings-btn:hover {
+  color: rgba(196, 58, 49, 1);
 }
 </style>
