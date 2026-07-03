@@ -4,7 +4,7 @@
     <header class="navbar">
       <div class="navbar-brand">
         <div class="logo-icon">
-          <i class="ri-bookmark-2-line"></i>
+          <i class="ri-target-line"></i>
         </div>
         <span class="brand-name">猩文标聚</span>
         <span class="brand-sub">sikenali · 文档智能处理平台</span>
