@@ -1,0 +1,51 @@
+:root {
+  --bg-primary: rgba(245, 240, 232, 1);
+  --bg-white: rgba(255, 255, 255, 1);
+  --brand-red: rgba(196, 58, 49, 1);
+  --brand-gold: rgba(200, 164, 92, 1);
+  --brand-green: rgba(91, 140, 90, 1);
+  --brand-blue: rgba(123, 158, 179, 1);
+  --brand-pink: rgba(184, 84, 80, 1);
+  --text-primary: rgba(61, 50, 38, 1);
+  --text-secondary: rgba(123, 158, 179, 1);
+  --text-muted: rgba(139, 115, 85, 1);
+  --text-light: rgba(184, 168, 138, 1);
+  --border-light: rgba(232, 213, 192, 1);
+  --border-gold: rgba(212, 196, 168, 1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --radius-card: 12px;
+  --radius-round: 9999px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  outline: none;
+}
