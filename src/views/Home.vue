@@ -28,7 +28,7 @@
       <!-- Title Section -->
       <section class="hero-section">
         <div class="decoration-line"></div>
-        <h1 class="hero-title">文房五宝 · 智驭文档</h1>
+        <h1 class="hero-title">文制五宝 · 五猩连逐</h1>
         <p class="hero-subtitle">取、制、检、版、比，五步成章，回旋有术</p>
       </section>
 
