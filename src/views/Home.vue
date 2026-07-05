@@ -6,7 +6,7 @@
         <div class="logo-icon">
           <i class="ri-target-line"></i>
         </div>
-        <span class="brand-name">猩文标聚</span>
+        <span class="brand-name">回旋标</span>
         <span class="brand-sub">文档智能处理平台</span>
       </div>
       <div class="navbar-actions">
@@ -61,7 +61,7 @@
 
     <!-- Footer Bar -->
     <footer class="app-footer">
-      <span>© 2026 猩文标聚</span>
+      <span>© 2026 回旋标</span>
     </footer>
 
     <!-- Bidding Sites Modal -->
