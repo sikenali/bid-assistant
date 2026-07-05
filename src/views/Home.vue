@@ -10,12 +10,16 @@
         <span class="brand-sub">文档智能处理平台</span>
       </div>
       <div class="navbar-actions">
-        <button class="btn-icon credit-btn" title="信用资质" @click="showCreditModal = true">
-          <i class="ri-shield-check-line"></i>
-        </button>
-        <button class="btn-icon settings-btn" title="投标网站" @click="showSettingsModal = true">
-          <i class="ri-links-line"></i>
-        </button>
+        <HoverTooltip text="信用查询">
+          <button class="btn-icon credit-btn" @click="showCreditModal = true">
+            <i class="ri-shield-check-line"></i>
+          </button>
+        </HoverTooltip>
+        <HoverTooltip text="招标采购">
+          <button class="btn-icon settings-btn" @click="showSettingsModal = true">
+            <i class="ri-links-line"></i>
+          </button>
+        </HoverTooltip>
       </div>
     </header>
 
@@ -44,7 +48,6 @@
             <p class="card-desc">{{ card.desc }}</p>
             <div class="card-accent" :style="{ background: card.color }"></div>
           </div>
-          <div class="shelf-base" :style="hoverIndex === index ? { background: card.color } : { background: card.shelfColor }" @mouseenter="hoverIndex = index" @mouseleave="hoverIndex = null"></div>
         </div>
       </section>
 
@@ -55,7 +58,7 @@
           <div class="scroll-diamond" :style="{ background: 'var(--brand-red)' }"></div>
           <div class="scroll-line"></div>
         </div>
-        <p class="footer-slogan">回旋有术 · 文档无忧</p>
+        <p class="footer-slogan">回旋有术 · 标标必中</p>
       </section>
     </main>
 
@@ -76,15 +79,15 @@
 import { ref } from 'vue'
 import BiddingSitesModal from '@/components/BiddingSitesModal.vue'
 import CreditQualificationModal from '@/components/CreditQualificationModal.vue'
+import HoverTooltip from '@/components/HoverTooltip.vue'
 
 const showSettingsModal = ref(false)
 const showCreditModal = ref(false)
-const hoverIndex = ref(null)
 
 const cards = [
   {
     title: '文取猩',
-    desc: '智能采集',
+    desc: '智能提取',
     icon: 'ri-inbox-line',
     color: 'var(--brand-red)',
     iconBg: 'rgba(253, 242, 238, 1)',
@@ -235,31 +238,26 @@ function handleCardClick(card) {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  perspective: 800px;
+  perspective: 1000px;
 }
 
 .shelf-item:hover {
-  transform: translateY(-8px);
+  transform: translateY(-16px);
 }
 
 .shelf-item:hover .card-body {
-  box-shadow: 0 16px 40px rgba(196, 58, 49, 0.12),
-              0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 24px 60px rgba(196, 58, 49, 0.15),
+              0 8px 24px rgba(0, 0, 0, 0.08);
   border-color: var(--brand-red);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .shelf-item:hover .card-icon {
-  transform: scale(1.1) rotate(-2deg);
+  transform: scale(1.15) rotate(-4deg);
 }
 
 .shelf-item:hover .card-accent {
-  width: 32px;
-}
-
-.shelf-item:hover .shelf-base {
-  width: 214px;
-  box-shadow: 0 6px 16px rgba(196, 58, 49, 0.15);
+  width: 40px;
 }
 
 .card-body {
@@ -274,9 +272,9 @@ function handleCardClick(card) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .card-icon {
@@ -287,7 +285,7 @@ function handleCardClick(card) {
   align-items: center;
   justify-content: center;
   font-size: 36px;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .card-accent {
@@ -295,7 +293,7 @@ function handleCardClick(card) {
   width: 9px;
   height: 8px;
   border-radius: 4px;
-  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .card-title {
@@ -309,17 +307,6 @@ function handleCardClick(card) {
   margin-top: 8px;
   font-size: 13px;
   color: var(--text-muted);
-}
-
-.shelf-base {
-  margin-top: 4px;
-  width: 201px;
-  height: 10px;
-  background: var(--border-gold);
-  border-radius: 3px;
-  box-shadow: var(--shadow-lg);
-  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Footer Decoration */

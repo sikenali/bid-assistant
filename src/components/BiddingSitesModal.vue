@@ -10,8 +10,8 @@
                 <i class="ri-links-line"></i>
               </div>
               <div class="header-text">
-                <h2 class="panel-title">常用投标网站</h2>
-                <p class="panel-subtitle">悬停卡片可预览详情，点击复制图标即可复制网站地址</p>
+                <h2 class="panel-title">招标采购平台</h2>
+                <p class="panel-subtitle">涵盖全军装备、航天、船舶、兵器等采购信息</p>
               </div>
             </div>
             <button class="close-btn" @click="close">
@@ -27,39 +27,24 @@
               class="site-card"
             >
               <div class="site-card-top">
-                <div class="site-logo" :style="{ backgroundImage: site.logo ? `url(${site.logo})` : '' }">
-                <img
-                  v-if="!site.logo"
-                  :src="`https://www.google.com/s2/favicons?domain=${site.url}&sz=64`"
-                  :alt="site.name"
-                  class="site-favicon"
-                  @error="onFaviconError(site, index)"
-                />
-              </div>
+                <i class="ri-target-line site-logo"></i>
                 <div class="site-info">
                   <h3 class="site-name">{{ site.name }}</h3>
                   <p class="site-desc">{{ site.desc }}</p>
                 </div>
               </div>
               <div class="site-card-bottom">
-                <span class="site-url-tooltip" :title="site.url">
-                  <i class="ri-global-line site-url-icon"></i>
-                  <span class="site-url-text">{{ site.url }}</span>
-                </span>
-                <button class="copy-btn" @click="copyUrl(site.url)" title="复制网址">
-                  <i class="ri-file-copy-line"></i>
-                </button>
+                <a class="site-link" :href="site.url" target="_blank" :title="site.url">
+                  <i class="ri-external-link-line"></i>
+                  <span>{{ site.name }}</span>
+                </a>
               </div>
             </div>
           </div>
 
           <!-- Panel Footer -->
           <div class="panel-footer">
-            <span class="footer-hint">
-              <i class="ri-information-line"></i>
-              悬停卡片可预览详情，点击复制图标即可复制网站地址
-            </span>
-            <span class="footer-count">共 {{ biddingSites.length }} 个投标网站</span>
+            <a href="https://www.tbrdh.com/" target="_blank" class="footer-link">投标人导航网</a>
           </div>
         </div>
       </div>
@@ -82,50 +67,40 @@ function close() {
 }
 
 const biddingSites = [
-  { name: '中国招标投标', desc: '公共服务平台', url: 'www.ctbpsp.com', logo: '' },
-  { name: '中国采购', desc: '与招标网', url: 'www.chinabidding.com.cn', logo: '' },
-  { name: '中国政府采购网', desc: '财政部官方', url: 'www.ccgp.gov.cn', logo: '' },
-  { name: '全国公共资源', desc: '交易平台', url: 'www.ggzy.gov.cn', logo: '' },
-  { name: '中国国际招标网', desc: '国际招标采购', url: 'www.chinabidding.com', logo: '' },
-  { name: '必联网', desc: '电子招投标', url: 'www.ebnew.com', logo: '' },
-  { name: '中国招标网', desc: '招标信息发布', url: 'www.cnbidding.com', logo: '' },
-  { name: '采招网', desc: '采购招标平台', url: 'www.bidcenter.com.cn', logo: '' },
-  { name: '千里马招标网', desc: '招标信息聚合', url: 'www.qianlima.com', logo: '' },
-  { name: '剑鱼标讯', desc: '标讯服务平台', url: 'www.jianyu360.com', logo: '' },
-  { name: '招标雷达', desc: '智能招标搜索', url: 'www.bidradar.com', logo: '' },
-  { name: '招标投标协会', desc: '行业协会官网', url: 'www.ctba.org.cn', logo: '' },
-  { name: '建设招标网', desc: '工程建设招标', url: 'www.jszhaobiao.com', logo: '' },
-  { name: '电力招标网', desc: '电力行业招标', url: 'www.dlzb.com', logo: '' },
-  { name: '水利招标网', desc: '水利工程招标', url: 'www.slzb.com', logo: '' },
-  { name: '政府采购招标', desc: '政采信息平台', url: 'www.zfcgxb.com', logo: '' },
-  { name: '交通招标网', desc: '交通工程招标', url: 'www.jtzzb.com', logo: '' },
-  { name: '石化招标网', desc: '石化行业招标', url: 'www.shzb.com', logo: '' },
-  { name: '铁路招标网', desc: '铁路工程招标', url: 'www.tlzb.com', logo: '' },
-  { name: '通信招标网', desc: '通信行业招标', url: 'www.txzb.com', logo: '' },
-  { name: '教育招标网', desc: '教育采购招标', url: 'www.jyzb.com', logo: '' },
-  { name: '医疗招标网', desc: '医疗器械招标', url: 'www.ylzb.com', logo: '' },
-  { name: '环保招标网', desc: '环保工程招标', url: 'www.hbzb.com', logo: '' },
-  { name: '能源招标网', desc: '能源行业招标', url: 'www.nyzb.com', logo: '' },
-  { name: '农业招标网', desc: '农业工程招标', url: 'www.nyzbw.com', logo: '' },
+  { name: '全军武器装备采购信息网', desc: '军委装备发展部', url: 'http://www.weain.mil.cn', logo: '' },
+  { name: '军队采购网', desc: '军委后勤保障部', url: 'https://www.plap.mil.cn', logo: '' },
+  { name: '航天电子采购平台', desc: '航天科技 CASC', url: 'https://www.ispacechina.com', logo: '' },
+  { name: '航天科工集中采购平台', desc: '航天科工 CASIC', url: 'https://www.e-casic.com', logo: '' },
+  { name: '中国船舶电子招标投标平台', desc: '中国船舶集团', url: 'https://www.csscbidding.com', logo: '' },
+  { name: '中国电科电子采购平台', desc: '中国电科', url: 'http://www.cetceg.com', logo: '' },
+  { name: '中国兵器电子商务平台', desc: '兵器工业集团', url: 'https://www.norincogroup-ebuy.com', logo: '' },
+  { name: '中国采购与招标网', desc: '国家发改委指导', url: 'https://www.chinabidding.cn', logo: '' },
+  { name: '中招联合招标采购网', desc: '第三方电子招投标', url: 'https://www.365trade.com.cn', logo: '' },
+  { name: '中国仪器进出口集团有限公司招投标平台', desc: '通用技术旗下', url: 'https://bid.cnic.com.cn', logo: '' },
+  { name: '中国华电集团电子商务平台', desc: '华电集团', url: 'https://www.chdtp.com', logo: '' },
+  { name: '中招国际招标有限公司', desc: '国际招标代理', url: 'https://www.cntcitc.com.cn/', logo: '' },
 ]
 
 function onFaviconError(site) {
   site.logo = ''
 }
 
+function formatUrl(url) {
+  return url.replace(/^https?:\/\//, '')
+}
+
 async function copyUrl(url) {
-  const fullUrl = `http://${url}`
   try {
-    await navigator.clipboard.writeText(fullUrl)
-    showToast(`已复制: ${fullUrl}`)
+    await navigator.clipboard.writeText(url)
+    showToast('已复制')
   } catch (err) {
     const textarea = document.createElement('textarea')
-    textarea.value = fullUrl
+    textarea.value = url
     document.body.appendChild(textarea)
     textarea.select()
     document.execCommand('copy')
     document.body.removeChild(textarea)
-    showToast(`已复制: ${fullUrl}`)
+    showToast('已复制')
   }
 }
 
@@ -247,7 +222,7 @@ function showToast(message) {
 /* Website Grid */
 .website-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin-bottom: 32px;
 }
@@ -308,19 +283,12 @@ function showToast(message) {
   height: 36px;
   background: rgba(245, 240, 232, 1);
   border-radius: 8px;
-  background-size: cover;
-  background-position: center;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-}
-
-.site-favicon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+  flex-shrink: 0;
+  font-size: 18px;
+  color: rgba(196, 58, 49, 1);
 }
 
 .site-info {
@@ -358,111 +326,61 @@ function showToast(message) {
   max-width: 100%;
 }
 
+/* Site Card Bottom Link */
 .site-card-bottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding-top: 6px;
   margin-top: 4px;
   border-top: 1px solid rgba(245, 240, 232, 1);
-  min-width: 0;
 }
 
-/* URL Tooltip */
-.site-url-tooltip {
-  display: flex;
+.site-link {
+  display: inline-flex;
   align-items: center;
   gap: 5px;
-  flex: 1;
-  min-width: 0;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(245, 240, 232, 0);
-  transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  overflow: hidden;
-}
-
-.site-card:hover .site-url-tooltip {
-  background: rgba(245, 240, 232, 0.8);
-}
-
-.site-url-icon {
-  font-size: 13px;
-  color: rgba(196, 58, 49, 0.6);
-  line-height: 1;
-  flex-shrink: 0;
-  transition: color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.site-card:hover .site-url-icon {
-  color: rgba(196, 58, 49, 1);
-}
-
-.site-url-text {
-  font-size: 9px;
-  color: rgba(123, 158, 179, 1);
-  line-height: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: color 0.25s;
-}
-
-.site-card:hover .site-url-text {
-  color: rgba(123, 158, 179, 0.9);
-}
-
-/* Copy Button */
-.copy-btn {
-  width: 24px;
-  height: 24px;
-  background: rgba(253, 242, 238, 1);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 8px;
   font-size: 12px;
+  font-weight: 500;
   color: rgba(196, 58, 49, 1);
-  cursor: pointer;
-  border: none;
-  flex-shrink: 0;
-  transition: background 0.2s, transform 0.15s;
+  background: rgba(253, 242, 238, 1);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.copy-btn:hover {
+.site-link:hover {
   background: rgba(196, 58, 49, 0.1);
-  transform: scale(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(196, 58, 49, 0.1);
 }
 
-.copy-btn:active {
-  transform: scale(0.95);
+.site-link i {
+  font-size: 14px;
 }
 
 /* Panel Footer */
 .panel-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding-top: 16px;
   border-top: 1px solid rgba(245, 240, 232, 1);
 }
 
-.footer-hint {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: rgba(139, 115, 85, 1);
-}
-
-.footer-hint i {
-  font-size: 14px;
-  color: rgba(123, 158, 179, 1);
-}
-
-.footer-count {
-  font-size: 12px;
+.footer-link {
+  font-size: 13px;
   color: rgba(196, 58, 49, 1);
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  transition: background 0.25s, color 0.25s;
+}
+
+.footer-link:hover {
+  background: rgba(196, 58, 49, 0.1);
+  color: rgba(196, 58, 49, 0.8);
 }
 
 /* Modal Transition */

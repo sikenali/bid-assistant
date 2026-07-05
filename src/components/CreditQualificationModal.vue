@@ -10,7 +10,7 @@
                 <i class="ri-shield-check-line"></i>
               </div>
               <div class="header-text">
-                <h2 class="panel-title">信用资质查询平台</h2>
+                <h2 class="panel-title">信用查询平台</h2>
                 <p class="panel-subtitle">查询企业信用、处罚记录、资质证书等招投标必备信息</p>
               </div>
             </div>
@@ -27,30 +27,23 @@
               class="site-card"
             >
               <div class="site-card-top">
-                <div class="site-logo" :style="{ backgroundImage: site.logo ? `url(${site.logo})` : '' }"></div>
+                <i class="ri-target-line site-logo"></i>
                 <div class="site-info">
                   <h3 class="site-name">{{ site.name }}</h3>
                   <p class="site-desc">{{ site.desc }}</p>
                 </div>
               </div>
               <div class="site-card-bottom">
-                <span class="site-url-tooltip" :title="site.url">
-                  <i class="ri-global-line site-url-icon"></i>
-                  <span class="site-url-text">{{ site.url }}</span>
-                </span>
-                <button class="copy-btn" @click="copyUrl(site.url)" title="复制网址">
-                  <i class="ri-file-copy-line"></i>
-                </button>
+                <a class="site-link" :href="site.url" target="_blank" :title="site.url">
+                  <i class="ri-external-link-line"></i>
+                  <span>{{ site.name }}</span>
+                </a>
               </div>
             </div>
           </div>
 
           <!-- Panel Footer -->
           <div class="panel-footer">
-            <span class="footer-hint">
-              <i class="ri-information-line"></i>
-              悬停卡片可预览详情，点击右下角复制图标即可复制网站地址
-            </span>
             <span class="footer-count">共 {{ creditSites.length }} 个信用资质平台</span>
           </div>
         </div>
@@ -74,46 +67,30 @@ function close() {
 }
 
 const creditSites = [
-  { name: '信用中国', desc: '信用信息总门户', url: 'www.creditchina.gov.cn', logo: '' },
-  { name: '守信荣誉查询', desc: '诚实守信相关荣誉', url: 'www.creditchina.gov.cn/xinyongfuwu/shouxinhongmingdan/', logo: '' },
-  { name: '失信黑名单查询', desc: '严重失信主体名单', url: 'www.creditchina.gov.cn/xinyongfuwu/shixinheimingdan/', logo: '' },
-  { name: '经营异常名录', desc: '活动异常名录查询', url: 'www.creditchina.gov.cn/xinyongfuwu/zhongdianguanzhushixinmingdan/', logo: '' },
-  { name: '失信被执行人', desc: '法院失信被执行', url: 'zxgk.court.gov.cn/shixin/', logo: '' },
-  { name: '重大税收违法', desc: '税收违法失信主体', url: 'www.creditchina.gov.cn/xinyongfuwu/zhongdashuishouweifaanjian/', logo: '' },
-  { name: '社会组织失信名单', desc: '社会组织严重违法', url: 'www.creditchina.gov.cn/xinyongfuwu/shzz/', logo: '' },
-  { name: '纳税信用A级名单', desc: 'A级纳税人公布', url: 'www.chinatax.gov.cn/chinatax/n810346/c102299/', logo: '' },
-  { name: '企业信用评级', desc: '中国企业信用评级', url: 'www.cecpsp.org.cn/', logo: '' },
-  { name: '中国裁判文书网', desc: '裁判文书查询', url: 'wenshu.court.gov.cn/', logo: '' },
-  { name: '管理体系认证查询', desc: '认证结果查询', url: 'cx.cnca.cn/', logo: '' },
-  { name: '小微企业名录', desc: '工信部企业查询', url: 'xwqy.gsxt.gov.cn/', logo: '' },
-  { name: '国家职业资格证书', desc: '职业资格查询', url: 'zscx.osta.org.cn/', logo: '' },
-  { name: '中国专利信息网', desc: '专利信息查询', url: 'www.patent.com.cn/', logo: '' },
-  { name: '中国版权保护中心', desc: '版权登记查询', url: 'www.ccopyright.com.cn/', logo: '' },
-  { name: '食品安全标准查询', desc: '国家标准查询', url: 'www.nhc.gov.cn/sps/spaqgjbz/', logo: '' },
-  { name: '电信业务经营许可', desc: '工信部许可查询', url: 'tsm.miit.gov.cn/', logo: '' },
-  { name: '国家税务总局', desc: '税务信息查询', url: 'www.chinatax.gov.cn/', logo: '' },
-  { name: '注册会计师信息查询', desc: '中注协会员查询', url: 'cmis.cicpa.org.cn/', logo: '' },
-  { name: '检验检测报告查询', desc: '质检报告查询', url: 'cx.cnca.cn/CertECloud/qts/', logo: '' },
-  { name: '中国建造师网', desc: '建造师信息查询', url: 'www.coc.gov.cn/', logo: '' },
-  { name: '注册安全工程师', desc: '安全工程师查询', url: 'rmocse.chinasafety.ac.cn/', logo: '' },
-  { name: '全国特种设备公示', desc: '特种设备查询', url: 'cnse.e-cqs.cn/', logo: '' },
-  { name: '建筑工程施工许可', desc: '电子证照查询', url: 'jzsc.mohurd.gov.cn/data/elePermit', logo: '' },
-  { name: '人民银行企业征信', desc: '企业信用报告', url: 'www.pbccrc.org.cn/zxzx/qyzx/', logo: '' },
+  { name: '国家企业信用信息公示系统', desc: '企业基础信息查询', url: 'https://www.gsxt.gov.cn/index.html', logo: 'https://icon.horse/icon/www.gsxt.gov.cn' },
+  { name: '信用中国', desc: '信用信息总门户', url: 'https://www.creditchina.gov.cn', logo: 'https://icon.horse/icon/www.creditchina.gov.cn' },
+  { name: '政府采购严重违法失信行为记录名单', desc: '政府采购失信', url: 'https://www.ccgp.gov.cn/search/cr/', logo: 'https://www.ccgp.gov.cn/favicon.ico' },
+  { name: '中国裁判文书网', desc: '裁判文书查询', url: 'https://wenshu.court.gov.cn', logo: 'https://icon.horse/icon/wenshu.court.gov.cn' },
+  { name: '全国社会组织信用信息公示平台', desc: '社会组织信用', url: 'https://xxgs.chinanpo.mca.gov.cn/gsxt/newList', logo: 'https://xxgs.chinanpo.mca.gov.cn/favicon.ico' },
+  { name: '军队采购失信名单', desc: '军队采购失信查询', url: 'https://www.plap.mil.cn', logo: 'https://icon.horse/icon/www.plap.mil.cn' },
 ]
 
+function onFaviconError(site) {
+  site.logo = ''
+}
+
 async function copyUrl(url) {
-  const fullUrl = `http://${url}`
   try {
-    await navigator.clipboard.writeText(fullUrl)
-    showToast(`已复制: ${fullUrl}`)
+    await navigator.clipboard.writeText(url)
+    showToast('已复制')
   } catch (err) {
     const textarea = document.createElement('textarea')
-    textarea.value = fullUrl
+    textarea.value = url
     document.body.appendChild(textarea)
     textarea.select()
     document.execCommand('copy')
     document.body.removeChild(textarea)
-    showToast(`已复制: ${fullUrl}`)
+    showToast('已复制')
   }
 }
 
@@ -234,7 +211,7 @@ function showToast(message) {
 /* Website Grid */
 .website-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 32px;
 }
@@ -295,9 +272,12 @@ function showToast(message) {
   height: 36px;
   background: rgba(245, 240, 232, 1);
   border-radius: 8px;
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  font-size: 18px;
+  color: rgba(196, 58, 49, 1);
 }
 
 .site-info {
@@ -335,83 +315,38 @@ function showToast(message) {
   max-width: 100%;
 }
 
+/* Site Card Bottom Link */
 .site-card-bottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding-top: 6px;
   margin-top: 4px;
   border-top: 1px solid rgba(245, 240, 232, 1);
-  min-width: 0;
 }
 
-/* URL Tooltip */
-.site-url-tooltip {
-  display: flex;
+.site-link {
+  display: inline-flex;
   align-items: center;
   gap: 5px;
-  flex: 1;
-  min-width: 0;
-  padding: 3px 8px;
-  border-radius: 6px;
-  background: rgba(245, 240, 232, 0);
-  transition: background 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  overflow: hidden;
-}
-
-.site-card:hover .site-url-tooltip {
-  background: rgba(245, 240, 232, 0.8);
-}
-
-.site-url-icon {
-  font-size: 13px;
-  color: rgba(196, 58, 49, 0.6);
-  line-height: 1;
-  flex-shrink: 0;
-  transition: color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.site-card:hover .site-url-icon {
-  color: rgba(196, 58, 49, 1);
-}
-
-.site-url-text {
-  font-size: 9px;
-  color: rgba(123, 158, 179, 1);
-  line-height: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: color 0.25s;
-}
-
-.site-card:hover .site-url-text {
-  color: rgba(123, 158, 179, 0.9);
-}
-
-.copy-btn {
-  width: 24px;
-  height: 24px;
-  background: rgba(253, 242, 238, 1);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 8px;
   font-size: 12px;
+  font-weight: 500;
   color: rgba(196, 58, 49, 1);
-  cursor: pointer;
-  border: none;
-  flex-shrink: 0;
-  transition: background 0.2s, transform 0.15s;
+  background: rgba(253, 242, 238, 1);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.copy-btn:hover {
+.site-link:hover {
   background: rgba(196, 58, 49, 0.1);
-  transform: scale(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(196, 58, 49, 0.1);
 }
 
-.copy-btn:active {
-  transform: scale(0.95);
+.site-link i {
+  font-size: 14px;
 }
 
 /* Panel Footer */
