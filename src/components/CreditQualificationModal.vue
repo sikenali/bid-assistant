@@ -11,7 +11,7 @@
               </div>
               <div class="header-text">
                 <h2 class="panel-title">信用查询平台</h2>
-                <p class="panel-subtitle">查询企业信用、处罚记录、资质证书等招投标必备信息</p>
+                <p class="panel-subtitle">企业信用、处罚记录、裁判文书、社会组织及军队采购失信查询</p>
               </div>
             </div>
             <button class="close-btn" @click="close">
@@ -36,7 +36,7 @@
               <div class="site-card-bottom">
                 <a class="site-link" :href="site.url" target="_blank" :title="site.url">
                   <i class="ri-external-link-line"></i>
-                  <span>{{ site.name }}</span>
+                  <span>{{ site.url }}</span>
                 </a>
               </div>
             </div>

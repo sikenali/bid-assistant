@@ -36,7 +36,7 @@
               <div class="site-card-bottom">
                 <a class="site-link" :href="site.url" target="_blank" :title="site.url">
                   <i class="ri-external-link-line"></i>
-                  <span>{{ site.name }}</span>
+                  <span>{{ site.url }}</span>
                 </a>
               </div>
             </div>
