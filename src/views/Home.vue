@@ -28,7 +28,7 @@
       <!-- Title Section -->
       <section class="hero-section">
         <div class="decoration-line"></div>
-        <h1 class="hero-title">文制五宝 · 五猩连逐</h1>
+        <h1 class="hero-title">文制五攻 · 五猩连逐</h1>
         <p class="hero-subtitle">取、制、检、版、比，五步成章，回旋有术</p>
       </section>
 
@@ -64,7 +64,7 @@
 
     <!-- Footer Bar -->
     <footer class="app-footer">
-      <span>© 2026 回旋标</span>
+      <span>© {{ currentYear }} 回旋标  Powered by LightOS</span>
     </footer>
 
     <!-- Bidding Sites Modal -->
@@ -81,6 +81,7 @@ import BiddingSitesModal from '@/components/BiddingSitesModal.vue'
 import CreditQualificationModal from '@/components/CreditQualificationModal.vue'
 import HoverTooltip from '@/components/HoverTooltip.vue'
 
+const currentYear = new Date().getFullYear()
 const showSettingsModal = ref(false)
 const showCreditModal = ref(false)
 
