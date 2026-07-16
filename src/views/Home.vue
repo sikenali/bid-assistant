@@ -92,7 +92,7 @@ const cards = [
     color: 'var(--brand-red)',
     iconBg: 'rgba(253, 242, 238, 1)',
     shelfColor: 'var(--border-gold)',
-    url: 'https://example.com/collection'
+    url: 'https://github.com/sikenali/bid-extractor'
   },
   {
     title: '文制猩',
@@ -101,7 +101,7 @@ const cards = [
     color: 'var(--brand-gold)',
     iconBg: 'rgba(253, 248, 232, 1)',
     shelfColor: 'var(--border-gold)',
-    url: 'https://example.com/generate'
+    url: 'https://github.com/sikenali/bid-maker'
   },
   {
     title: '文检猩',
@@ -110,7 +110,7 @@ const cards = [
     color: 'var(--brand-green)',
     iconBg: 'rgba(237, 245, 237, 1)',
     shelfColor: 'var(--border-gold)',
-    url: 'https://example.com/verify'
+    url: 'https://github.com/sikenali/bid-checker'
   },
   {
     title: '文版猩',
@@ -119,7 +119,7 @@ const cards = [
     color: 'var(--brand-blue)',
     iconBg: 'rgba(237, 242, 247, 1)',
     shelfColor: 'var(--border-gold)',
-    url: 'https://example.com/layout'
+    url: 'https://github.com/sikenali/bid-typesetting'
   },
   {
     title: '文比猩',
@@ -128,7 +128,7 @@ const cards = [
     color: 'var(--brand-pink)',
     iconBg: 'rgba(250, 238, 238, 1)',
     shelfColor: 'var(--border-gold)',
-    url: 'https://example.com/compare'
+    url: 'https://github.com/sikenali/bid-compare'
   },
 ]
 
