@@ -28,8 +28,8 @@
       <!-- Title Section -->
       <section class="hero-section">
         <div class="decoration-line"></div>
-        <h1 class="hero-title">文制五攻 · 五猩连逐</h1>
-        <p class="hero-subtitle">取、制、检、版、比，五步成章，回旋有术</p>
+        <h1 class="hero-title">文制五攻 · 六猩连逐</h1>
+        <p class="hero-subtitle">取、制、检、版、比、价，六步成章，回旋有术</p>
       </section>
 
       <!-- Five Cards Shelf -->
@@ -130,6 +130,15 @@ const cards = [
     iconBg: 'rgba(250, 238, 238, 1)',
     shelfColor: 'var(--border-gold)',
     url: 'https://github.com/sikenali/bid-compare'
+  },
+  {
+    title: '文价猩',
+    desc: '智能报价',
+    icon: 'ri-price-tag-3-line',
+    color: 'var(--brand-purple)',
+    iconBg: 'rgba(245, 238, 250, 1)',
+    shelfColor: 'var(--border-gold)',
+    url: 'https://github.com/sikenali/bid-quotation'
   },
 ]
 
