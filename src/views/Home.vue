@@ -4,7 +4,7 @@
     <header class="navbar">
       <div class="navbar-brand">
         <div class="logo-icon">
-          <i class="ri-target-line"></i>
+          <i class="ri-bookmark-2-line"></i>
         </div>
         <span class="brand-name">回旋标</span>
         <span class="brand-sub">文档智能处理平台</span>
